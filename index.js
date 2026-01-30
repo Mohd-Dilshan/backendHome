@@ -20,14 +20,21 @@ const url = require('url');
 const server = http.createServer((req, res) => {
     const parseUrl = url.parse(req.url, true);
     const pathName = parseUrl.pathname;
+    const query = parseUrl.query;
+
+    res.writeHead(200, { 'Content-Type': 'text/html' });
 
     if (pathName === '/') {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end('<h1>Welcome to the Home Page</h1>');
+        res.write('<h1>Welcome to the Home Page</h1>');
+        res.end();
+    }else if (pathName === '/addName') {
+        const { name } = query;
+        res.write(`<H1>Hello ${name}`);
     }
 });
 
 // ✅ start the server
 server.listen(3000, () => {
-    console.log('Server running at http://localhost:3000');
+    console.log('http://localhost:3000');
 });
+
